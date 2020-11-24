@@ -1,0 +1,26 @@
+<ScreenManager>: 
+    MainScreen:
+    NameScreen: 
+        
+<MainScreen>:
+    name: 'main'
+    BoxLayout: 
+        orientaion: 'vertical'
+        Label: 
+            text: 'Join the Romans: A Name Generator'
+        BoxLayout:
+            Label: 
+                text: 'Enter your godforsaken plebe name.'
+            TextInput:
+                halign: 'right'
+                font_size: 55
+                id: name
+        Button: 
+            text: 'Enter'
+            on_press: root.manager.current = 'name'
+
+<NameScreen>:
+    name: 'name'
+    BoxLayout: 
+        Label: 
+            text: root.return_name()
