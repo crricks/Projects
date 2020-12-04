@@ -98,17 +98,18 @@ def createChart():
     data = nsj.getStationData()
     dataCopy = data[:]
   
+    cols = []
+    i = 0
+    for i in range(8): 
+        cols.append(dataCopy[i * 17:(i + 1) * 17])
+        i += 1
+
     comp = []
-    for i in range(17, 0, -1): 
-        count = 0
-        col = []
-        for entry in dataCopy: 
-            if count % i == 0: 
-                col.append(entry)
-            count += 1
-        comp.append(col)
-        for item in col: 
-            dataCopy.remove(item)
+    for i in range(17): 
+        temp = []
+        for col in cols:
+            temp.append(col[i])
+        comp.append(temp)
     
     comp[0] = [col.rjust(19) for col in comp[0]]   
     comp[1] = [col.ljust(5) for col in comp[1]]
