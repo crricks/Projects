@@ -1,0 +1,284 @@
+<CustomBoxLayout>:
+    canvas:
+        Color:
+            rgba: 255, 255, 255, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<CustomGridLayout>:
+    canvas:
+        Color:
+            rgba: 255, 255, 255, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<OpenScreen>:
+    name: 'open'
+    access: access
+    CustomBoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Enter name of existing database or create new.'
+            color: 0, 0, 0, 1
+        TextInput:
+            font_size: 30
+            id: access
+        Button:
+            text: 'Enter'
+            on_press:
+                root.getText()
+            on_press: root.manager.current = 'options'
+
+<RemovePopup>:
+    title: ''
+    size_hint: None, None
+    size: 400, 400
+
+    CustomBoxLayout:
+        orientation: 'vertical'
+        Button:
+            text: 'Remove'
+            on_press:
+                root.obj.remove_item()
+                root.obj.update_changes()
+                root.dismiss()
+        Button:
+            text: 'Exit'
+            on_press: root.dismiss()
+
+<SelectableButton>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (.0, 0.9, .1, .3) if self.selected else (0, 0, 0, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<RV>:
+    RecycleGridLayout:
+        canvas:
+            Color:
+                rgba: 255, 255, 255, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        cols: 2
+        viewclass: 'SelectableButton'
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: True
+        touch_multiselect: True
+
+<List>:
+    id: list
+    title: ''
+    CustomBoxLayout:
+        orientation: 'vertical'
+        GridLayout:
+            size_hint: 1, None
+            size_hint_y: 0.15
+            height: 25
+            cols: 2
+
+            Label:
+                text: "Item"
+                bold: True
+                color: 0, 0, 0, 1
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Line:
+                        width: 1.1
+                        rectangle: self.x, self.y, self.width, self.height
+
+            Label:
+                text: "Location"
+                bold: True
+                color: 0, 0, 0, 1
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Line:
+                        width: 1.1
+                        rectangle: self.x, self.y, self.width, self.height
+        RV:
+            id: db
+        Button:
+            text: 'Done'
+            size_hint_y: 0.25
+            on_press:
+                root.dismiss()
+
+
+<OptionsScreen>:
+    name: 'options'
+    CustomBoxLayout:
+        orientation: 'vertical'
+        Button:
+            text: 'Add Item'
+            on_press: root.manager.current = 'add'
+        Button:
+            text: 'Change Location of Item'
+            on_press: root.manager.current = 'change loc'
+        Button:
+            text: 'Delete Item'
+            on_press: root.manager.current = 'delete'
+        Button:
+            text: 'View Items in Inventory'
+            on_press:
+                root.getData()
+                root.onView()
+
+<AddScreen>:
+    name: 'add'
+    item: item
+    location: location
+    on_leave:
+        root.ids.item.text = ''
+        root.ids.location.text = ''
+
+    CustomGridLayout:
+        cols: 2
+        Label:
+            text: 'Enter item: '
+            color: 0, 0, 0, 1
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 1
+                Line:
+                    width: 1.1
+                    rectangle: self.x, self.y, self.width, self.height
+        TextInput:
+            font_size: 30
+            id: item
+        Label:
+            text: 'Enter location: '
+            color: 0, 0, 0, 1
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 1
+                Line:
+                    width: 1.1
+                    rectangle: self.x, self.y, self.width, self.height
+        TextInput:
+            font_size: 30
+            id: location
+        Button:
+            text: 'Back'
+            on_press: root.manager.current = 'options'
+        Button:
+            text: 'Add'
+            on_press: root.addItemLocation()
+            on_release: root.manager.current = 'add another'
+        
+
+<AddAnotherScreen>:
+    name: 'add another'
+    CustomBoxLayout:
+        orientation: 'vertical'
+        Button:
+            text: 'Add another item'
+            on_press: root.manager.current = 'add'
+        Button:
+            text: 'Back'
+            on_press: root.manager.current = 'options'
+            
+<ChangeLocScreen>:
+    name: 'change loc'
+    item: item
+    location: location
+    on_leave:
+        root.ids.item.text = ''
+        root.ids.location.text = ''
+
+    CustomGridLayout:
+        cols: 2
+        Label:
+            text: 'Enter item: '
+            color: 0, 0, 0, 1
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 1
+                Line:
+                    width: 1.1
+                    rectangle: self.x, self.y, self.width, self.height
+        TextInput:
+            font_size: 30
+            id: item
+        Label:
+            text: 'Update location: '
+            color: 0, 0, 0, 1
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 1
+                Line:
+                    width: 1.1
+                    rectangle: self.x, self.y, self.width, self.height
+        TextInput:
+            font_size: 30
+            id: location
+        Button:
+            text: 'Back'
+            on_press: root.manager.current = 'options'
+        Button:
+            text: 'Change'
+            on_press: root.changeloc()
+            on_release: root.manager.current = 'change another'
+
+<ChangeAnotherScreen>:
+    name: 'change another'
+    CustomBoxLayout:
+        orientation: 'vertical'
+        Button:
+            text: 'Change another item'
+            on_press: root.manager.current = 'change loc'
+        Button:
+            text: 'Back'
+            on_press: root.manager.current = 'options'
+
+
+<DeleteScreen>:
+    name: 'delete'
+    item: item
+    on_leave:
+        root.ids.item.text = ''
+
+    CustomBoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Enter item to delete: '
+            color: 0, 0, 0, 1
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 1
+                Line:
+                    width: 1.1
+                    rectangle: self.x, self.y, self.width, self.height
+        TextInput:
+            id: item
+        Button:
+            text: 'Enter'
+            on_press: root.deleteItem()
+            on_release: root.manager.current = 'options'
+        Button:
+            text: 'Back'
+            on_press: root.manager.current = 'options'
+
+
+
+
+
+
+
+            
+
+        
+
+                
+            
