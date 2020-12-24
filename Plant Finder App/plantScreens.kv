@@ -30,15 +30,15 @@
             size: self.size
 
 <RV>:
-    RecycleGridLayout:
+    RecycleBoxLayout:
         canvas:
             Color:
                 rgba: 255, 255, 255, 1
             Rectangle:
                 pos: self.pos
                 size: self.size
-        cols: 2
         viewclass: 'SelectableButton'
+        orientation: 'vertical'
         default_size: None, dp(56)
         default_size_hint: 1, None
         size_hint_y: None
@@ -65,9 +65,14 @@
 
 <All>:
     name: 'all'
-    RV:
-        id: all
-
+    BoxLayout:
+        orientation: 'vertical'
+        RV:
+            id: all
+            data: [{'text': str(x)} for x in root.allPlants]
+        Button:
+            text: 'Back'
+            on_press: root.manager.current = 'find'
 
 
 

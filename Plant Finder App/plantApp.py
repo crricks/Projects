@@ -19,7 +19,7 @@ from kivy.uix.recycleview import RecycleView
 from kivy.properties import BooleanProperty, ListProperty, StringProperty, ObjectProperty
 from kivy.uix.behaviors import FocusBehavior
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
-from kivy.uix.recyclegridlayout import RecycleGridLayout
+from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
 from kivy.uix.button import Button
 
@@ -28,8 +28,8 @@ class FindOptions(Screen):
     pass
 
 
-class SelectableRecycleGridLayout(FocusBehavior, LayoutSelectionBehavior,
-                                  RecycleGridLayout):
+class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
+                                  RecycleBoxLayout):
     ''' Adds selection and focus behaviour to the view. '''
 
 
@@ -66,7 +66,7 @@ class RV(RecycleView):
 
 
 class All(Screen):
-    rows = ListProperty([])
+    allPlants = ListProperty([])
 
     def __init__(self, **kwargs):
         super(All, self).__init__(**kwargs)
@@ -74,9 +74,7 @@ class All(Screen):
 
     def getPlants(self, *args):
         cur.execute('SELECT name FROM Plant')
-        self.rows = cur.fetchall()
-        print(self.rows)
-        #self.ids.all.data = [{'text': str(x)} for x in self.rows]
+        self.allPlants = cur.fetchall()
 
 
 class PlantScreen(Screen):
