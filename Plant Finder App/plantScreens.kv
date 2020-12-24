@@ -1,12 +1,51 @@
 <ScreenManagement>:
+    FindOptions:
+    All:
 
 <FindOptions>:
-First find by: 
-    Color
-    Zone
-    Name
-    Family
-    ScrollAll
+    name: 'find'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Find By'
+        Button:
+            text: 'Color'
+        Button:
+            text: 'Zone'
+        Button:
+            text: 'Name'
+        Button:
+            text: 'Family'
+        Button:
+            text: 'See all'
+            on_press: root.manager.current = 'all'
+
+<SelectableButton>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (.0, 0.9, .1, .3) if self.selected else (0, 0, 0, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<RV>:
+    RecycleGridLayout:
+        canvas:
+            Color:
+                rgba: 255, 255, 255, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        cols: 2
+        viewclass: 'SelectableButton'
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: True
+        touch_multiselect: True
 
 <ColorToZone>: 
 
@@ -22,7 +61,12 @@ First find by:
 
 <SearchByName>:
 
-<FamilyToColor>: 
+<FamilyToColor>:
+
+<All>:
+    name: 'all'
+    RV:
+        id: all
 
 
 
