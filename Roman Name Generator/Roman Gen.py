@@ -101,9 +101,11 @@ Builder.load_string('''
                 root.manager.current = 'main'
 
                     ''')
-                    
+
+
 class MainScreen(Screen):
     pass
+
 
 class NameScreen(Screen):
     def on_enter(self, *args):
@@ -113,11 +115,11 @@ class NameScreen(Screen):
     def roman_calculation(self, plebe):
         self.plebe = str(plebe).lower()
         response = ''
-        if string.digits in self.plebe: 
+        if string.digits in self.plebe:
             response = "Oh, you're very XXIst century.\n"
         full_name = self.plebe.split()
         self.roman_name = []
-        for word in full_name: 
+        for word in full_name:
             added = ''
             if word[-1] in 'aeiouy':
                 added = random.choice(['v', 'm', 'n', 'l', 'ns', 'rp'])
@@ -129,7 +131,7 @@ class NameScreen(Screen):
     def rom_ending(self):
         roman_endings = open('latin_endings.txt', 'r')
         ending_list = []
-        for word in roman_endings: 
+        for word in roman_endings:
             ending_list.append(word.strip())
         self.end = random.choice(ending_list)
         return self.end
@@ -137,11 +139,13 @@ class NameScreen(Screen):
 class ScreenManagement(ScreenManager):
     pass
 
-class testingApp(App):
+
+class RomanApp(App):
     def build(self):
         return ScreenManagement()
-    
+
+
 if __name__ == '__main__':
-    testingApp().run()
+    RomanApp().run()
 
         

@@ -50,31 +50,37 @@
         multiselect: True
         touch_multiselect: True
 
+<ColorButton>:
+    on_press: root.manager.current = 'showColor'
+
 <Colors>:
     name: 'colors'
     BoxLayout:
         orientation: 'vertical'
-        Button:
+        ColorButton:
             text: 'Green'
-        Button:
+        ColorButton:
             text: 'Yellow'
-        Button:
+        ColorButton:
             text: 'White'
-        Button:
+        ColorButton:
             text: 'Red'
-        Button:
+        ColorButton:
             text: 'Pink'
-        Button:
+        ColorButton:
             text: 'Orange'
-        Button:
+        ColorButton:
             text: 'Blue'
         Button:
             text: 'Back'
             on_press: root.manager.current = 'find'
 
-<ColorToZone>: 
+<ShowByColor>:
+    name: 'showColor'
 
-<ColorToHabitat>: 
+<ColorToZone>:
+
+<ColorToHabitat>:
 
 <ColorToFamily>:
 
