@@ -76,6 +76,8 @@ class All(Screen):
         cur.execute('SELECT name FROM Plant')
         self.allPlants = cur.fetchall()
 
+class Colors(Screen):
+    pass
 
 class PlantScreen(Screen):
     plantDB = ObjectProperty()

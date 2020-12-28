@@ -1,6 +1,8 @@
 <ScreenManagement>:
     FindOptions:
     All:
+    Colors:
+
 
 <FindOptions>:
     name: 'find'
@@ -10,6 +12,7 @@
             text: 'Find By'
         Button:
             text: 'Color'
+            on_press: root.manager.current = 'colors'
         Button:
             text: 'Zone'
         Button:
@@ -46,6 +49,28 @@
         orientation: 'vertical'
         multiselect: True
         touch_multiselect: True
+
+<Colors>:
+    name: 'colors'
+    BoxLayout:
+        orientation: 'vertical'
+        Button:
+            text: 'Green'
+        Button:
+            text: 'Yellow'
+        Button:
+            text: 'White'
+        Button:
+            text: 'Red'
+        Button:
+            text: 'Pink'
+        Button:
+            text: 'Orange'
+        Button:
+            text: 'Blue'
+        Button:
+            text: 'Back'
+            on_press: root.manager.current = 'find'
 
 <ColorToZone>: 
 
