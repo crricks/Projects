@@ -3,7 +3,6 @@
     All:
     Colors:
 
-
 <FindOptions>:
     name: 'find'
     BoxLayout:
@@ -51,7 +50,10 @@
         touch_multiselect: True
 
 <ColorButton>:
-    on_press: root.manager.current = 'showColor'
+    id: color
+    on_press:
+        root.getColor(self)
+        root.manager.current = 'showColor'
 
 <Colors>:
     name: 'colors'
@@ -77,6 +79,13 @@
 
 <ShowByColor>:
     name: 'showColor'
+    BoxLayout:
+        orientation: 'vertical'
+        RV:
+            id: colorList
+        Button:
+            text: 'Back'
+            on_press: root.manager.current = 'colors'
 
 <ColorToZone>:
 

@@ -78,11 +78,27 @@ class All(Screen):
 
 
 class ColorButton(Button):
-    pass
+
+    def __init__(self, **kwargs):
+        super(ColorButton, self).__init__(**kwargs)
+
+    def getColor(self, *args):
+        self.color = self.ids.color.text
 
 
 class Colors(Screen):
     pass
+
+
+class ShowByColor(Screen):
+    colorPlants = ListProperty([])
+
+    def __init__(self, **kwargs):
+        super(ShowByColor, self).__init__(**kwargs)
+        self.getColor()
+
+    def getPlantsByColor(self, *args):
+        pass
 
 
 class PlantScreen(Screen):
