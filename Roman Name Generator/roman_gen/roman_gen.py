@@ -13,6 +13,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty, StringProperty
 
+
 Builder.load_string('''
 <ScreenManagement>:
     MainScreen:
@@ -127,14 +128,16 @@ class NameScreen(Screen):
             self.roman_name.append(roman_word.capitalize())
         self.roman_name = response + ' '.join(self.roman_name)
         return self.roman_name
-    
+
+
     def rom_ending(self):
-        roman_endings = open('latin_endings.txt', 'r')
         ending_list = []
-        for word in roman_endings:
-            ending_list.append(word.strip())
-        self.end = random.choice(ending_list)
-        return self.end
+        with open('latin_endings.txt') as roman_endings:
+            for word in roman_endings:
+                ending_list.append(word.strip())
+            self.end = random.choice(ending_list)
+            return self.end
+
 
 class ScreenManagement(ScreenManager):
     pass

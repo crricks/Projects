@@ -40,11 +40,11 @@ class OpenScreen(Screen):
     def __init__(self, **kwargs):
         super(OpenScreen, self).__init__(**kwargs)
 
-    def getText(self, *args):
+    def get_text(self, *args):
         self.inventory = self.access.text.strip()
-        self.openInventory(self.inventory)
+        self.open_inventory(self.inventory)
     
-    def openInventory(self, name):
+    def open_inventory(self, name):
         self.i = Inventory(name)
 
 
@@ -92,7 +92,7 @@ class SelectableButton(RecycleDataViewBehavior, Button):
 
     def remove_item(self):
         self.i = sm.get_screen('open').i
-        self.i.removeItem(self.text)
+        self.i.remove_item(self.text)
 
     def update_changes(self):
         self.text = ''
@@ -113,7 +113,7 @@ class List(Popup):
     def __init__(self, obj, **kwargs):
         super(List, self).__init__(**kwargs)
         self.obj = obj
-        update = sm.get_screen('options').dataItems
+        update = sm.get_screen('options').data_items
         self.ids.db.data = [{'text': str(x)} for x in update]
 
 
@@ -121,16 +121,16 @@ class OptionsScreen(Screen):
     def __init__(self, **kwargs):
         super(OptionsScreen, self).__init__(**kwargs)
 
-    def getData(self):
-        self.dataItems = []
+    def get_data(self):
+        self.data_items = []
         self.i = sm.get_screen('open').i
-        rows = self.i.viewItems('Locations')
+        rows = self.i.view_items('Locations')
 
         for row in rows:
             for col in row:
-                self.dataItems.append(col)
+                self.data_items.append(col)
 
-    def onView(self):
+    def on_view(self):
         popup = List(self)
         popup.open()
 
@@ -142,9 +142,9 @@ class AddScreen(Screen):
     def __init__(self, **kwargs):
         super(AddScreen, self).__init__(**kwargs)
     
-    def addItemLocation(self, *args):
+    def add_item_location(self, *args):
         self.i = sm.get_screen('open').i
-        self.i.addItem(self.item.text.strip(), self.location.text.strip())
+        self.i.add_item(self.item.text.strip(), self.location.text.strip())
 
 
 class AddAnotherScreen(Screen):
@@ -158,9 +158,9 @@ class ChangeLocScreen(Screen):
     def __init__(self, **kwargs):
         super(ChangeLocScreen, self).__init__(**kwargs)
 
-    def changeloc(self, *args):
+    def change_loc(self, *args):
         self.i = sm.get_screen('open').i
-        self.i.updateLocation(self.item.text.strip(), self.location.text.strip())
+        self.i.update_location(self.item.text.strip(), self.location.text.strip())
 
 
 class ChangeAnotherScreen(Screen):
@@ -173,9 +173,10 @@ class DeleteScreen(Screen):
     def __init__(self, **kwargs):
         super(DeleteScreen, self).__init__(**kwargs)
 
-    def deleteItem(self, *args):
+    def delete_item(self, *args):
         self.i = sm.get_screen('open').i
-        self.i.removeItem(self.item.text.strip())
+        self.i.remove_item(self.item.text.strip())
+
 
 Builder.load_file('screens.kv')
 

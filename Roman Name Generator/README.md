@@ -1,10 +1,10 @@
 A quick and easy app made for latin language laughs! 
 
 First page:
-![Alt text](https://github.com/crricks/Projects/blob/main/Roman%20Name%20Generator/romanGenFirstPage.png "Roman Gen First Page")
+![Alt text](https://github.com/crricks/Projects/blob/main/Roman%20Name%20Generator/roman_gen_first_page.png "Roman Gen First Page")
 
 Second page:
-![Alt text](https://github.com/crricks/Projects/blob/main/Roman%20Name%20Generator/romanGenSecondPage.png "Roman Gen Second Page")
+![Alt text](https://github.com/crricks/Projects/blob/main/Roman%20Name%20Generator/roman_gen_second_page.png "Roman Gen Second Page")
 
 Image credits: 
 

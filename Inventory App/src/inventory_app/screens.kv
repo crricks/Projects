@@ -28,7 +28,7 @@
         Button:
             text: 'Enter'
             on_press:
-                root.getText()
+                root.get_text()
             on_press: root.manager.current = 'options'
 
 <RemovePopup>:
@@ -132,8 +132,8 @@
         Button:
             text: 'View Items in Inventory'
             on_press:
-                root.getData()
-                root.onView()
+                root.get_data()
+                root.on_view()
 
 <AddScreen>:
     name: 'add'
@@ -174,7 +174,7 @@
             on_press: root.manager.current = 'options'
         Button:
             text: 'Add'
-            on_press: root.addItemLocation()
+            on_press: root.add_item_location()
             on_release: root.manager.current = 'add another'
         
 
@@ -228,7 +228,7 @@
             on_press: root.manager.current = 'options'
         Button:
             text: 'Change'
-            on_press: root.changeloc()
+            on_press: root.change_loc()
             on_release: root.manager.current = 'change another'
 
 <ChangeAnotherScreen>:
@@ -264,7 +264,7 @@
             id: item
         Button:
             text: 'Enter'
-            on_press: root.deleteItem()
+            on_press: root.delete_item()
             on_release: root.manager.current = 'options'
         Button:
             text: 'Back'
