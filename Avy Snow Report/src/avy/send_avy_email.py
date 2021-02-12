@@ -5,7 +5,7 @@ Created on Sun Nov 29 13:37:36 2020
 
 @author: clairericks
 """
-from avyReport import createChart
+from avy_report import create_chart
 import smtplib, ssl
 from email import encoders
 from email.mime.base import MIMEBase
@@ -13,7 +13,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-message = createChart()
+message = create_chart()
 with open('avyreport.txt', 'w') as file: 
     file.write(message)
     

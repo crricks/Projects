@@ -17,30 +17,35 @@ class AvyReport(object):
     def __init__(self): 
         self.data = []
         
-    def openURL(self, page):
+    def open_URL(self, page):
+        """opens home URL + page desired"""
         URL = 'https://avalanche.state.co.us/' + page
         self.soup = BeautifulSoup(requests.get(URL).text, 'html.parser')
         return self.soup
     
-    def getArea(self): 
-        soup = self.openURL('forecasts/backcountry-avalanche/north-san-juan/')
+    def get_area(self):
+        """gets desired area in Colorado - North San Juan"""
+        soup = self.open_URL('forecasts/backcountry-avalanche/north-san-juan/')
         self.area = soup.find('h1', class_='entry-title').text
         return self.area
     
-    def getIframe(self, page):
-        soup = self.openURL(page)
+    def get_iframe(self, page):
+        """used to get text under iframe tag"""
+        soup = self.open_URL(page)
         self.iframe = soup.find('div', class_='entry-content').iframe
         return self.iframe['src']
     
-    def getToday(self):
-        soup = self.openURL(self.getIframe('forecasts/backcountry-avalanche/north-san-juan/'))
+    def get_today(self):
+        """returns date and author of report"""
+        soup = self.open_URL(self.get_iframe('forecasts/backcountry-avalanche/north-san-juan/'))
         text = soup.find('h2', class_='caption caption-controls').text.split()
         self.today = ' '.join(text[:7])
         self.name = ' '.join(text[7:])
         return self.today, self.name
     
-    def getZones(self): 
-        soup = self.openURL(self.getIframe('forecasts/backcountry-avalanche/north-san-juan/'))
+    def get_zones(self):
+        """compiles different zone write-ups with zone location - above, at, below treeline"""
+        soup = self.open_URL(self.get_iframe('forecasts/backcountry-avalanche/north-san-juan/'))
         self.where = {}
         tbody = soup.tbody.find_all('td')
         for row in tbody: 
@@ -52,12 +57,14 @@ class AvyReport(object):
                 self.where[location] = ' '.join(row.text.split())
         return self.where
                 
-    def getSummary(self):
-        soup = self.openURL(self.getIframe('forecasts/backcountry-avalanche/north-san-juan/'))
+    def get_summary(self):
+        """scrapes report summary"""
+        soup = self.open_URL(self.get_iframe('forecasts/backcountry-avalanche/north-san-juan/'))
         self.summary = soup.find('div', class_='span4 fx-text-area').text
         return self.summary
         
-    def getStationData(self): 
+    def get_station_data(self):
+        """gathers information from relevant weather stations"""
         self.data = ['name', 'elev', 'Temp', 'MxTp', 'MnTp', 'DewP','RH', 'Spd', 'Dir', 
                 'Gst', 'Pcp1', 'Pcp24','PcpAc', 'Sno24', 'SWE24', 'SnoHt', 'SWE']
         stations = ['Lizard Head Pass', 'PBasin Telluride Sk', 'Swamp Angel', 
@@ -78,30 +85,32 @@ class AvyReport(object):
                 self.data.append(td.text)
             count += 1
         return self.data
-    
-def createChart(): 
+
+
+def create_chart():
+    """creates chart of avalanche data scraped with AvyReport"""
     report = ''
     nsj = AvyReport()
-    area = nsj.getArea()
-    today, name = nsj.getToday()
+    area = nsj.get_area()
+    today, name = nsj.get_today()
     report += '{}\n{}\n{}'.format(area, today, name)
     
-    zoneInfo = nsj.getZones()
-    above = zoneInfo['Above Treeline']
-    near = zoneInfo['Near Treeline']
-    below = zoneInfo['Below Treeline']
+    zone_info = nsj.get_zones()
+    above = zone_info['Above Treeline']
+    near = zone_info['Near Treeline']
+    below = zone_info['Below Treeline']
     report += '\n\nAbove Treeline: {}\nNear Treeline: {}\nBelow Treeline: {}'.format(above, near, below)
     
-    summary = nsj.getSummary()
+    summary = nsj.get_summary()
     report += '\n\n' + summary + '\n\n'
     
-    data = nsj.getStationData()
-    dataCopy = data[:]
+    data = nsj.get_station_data()
+    data_copy = data[:]
   
     cols = []
     i = 0
     for i in range(8): 
-        cols.append(dataCopy[i * 17:(i + 1) * 17])
+        cols.append(data_copy[i * 17:(i + 1) * 17])
         i += 1
 
     comp = []
@@ -118,8 +127,7 @@ def createChart():
     comp[6] = [col.ljust(3) for col in comp[6]]
     for i in range(11, 17):    
         comp[i] = [col.center(5) for col in comp[i]]
-    
-    
+
     for i in range(8): 
         together = ''
         for j in range(17):
